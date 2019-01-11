@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<ion-item color="navbar"  text-wrap  no-lines >
+			<h2  class='header' align="right" style="text-align:justify;direction:rtl" >{{ pageTitle }}</h2>
+		</ion-item>	
+	</ion-navbar>	
+</ion-header>
+
+
+<ion-content padding>
+				<ion-refresher (ionRefresh)="doRefresh($event)">
+				<ion-refresher-content></ion-refresher-content>
+				</ion-refresher>	
+				<ion-item  text-wrap inset *ngFor="let item of itemsList"  item-end  (click)="goToItemView(item)">
+					<div>
+						<h2 align="right" style="text-align:justify;direction:rtl" >{{item?.record_content.lang_far_title}}</h2>
+					</div>
+					<ion-item no-lines>
+						<ion-avatar  item-end>
+							<img src="{{item?.image_path}}">
+						</ion-avatar >
+						<h2  align="right">{{item?.user_title}}</h2>
+						<p *ngIf="item.consultation_title > '' " align="right" >مشاور {{item?.consultation_title}}</p>						
+					</ion-item>	
+				</ion-item>
+				<ion-infinite-scroll (ionInfinite)="doInfiniteFavorites($event)">
+					<ion-infinite-scroll-content></ion-infinite-scroll-content>
+				</ion-infinite-scroll>	
+			
+</ion-content>

@@ -1,0 +1,36 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar > 
+			<ion-title text-right >ورود</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+		<ion-list >
+			<ion-item>
+				<ion-label  stacked text-right   color="primary">: شماره همراه</ion-label>
+				<ion-input  text-right type="number"  maxlength="11" placeholder="شماره همراه را در اين قسمت وارد کنید" [(ngModel)]="login.username" #username="ngModel" name="username" type="text"  spellcheck="false" autocapitalize="off"
+					required>
+				</ion-input>
+			</ion-item>
+			<ion-item  text-wrap >
+				<div  style="text-align:justify;direction:rtl"  ion-text color="secondary" text-right>
+					جهت ورود و يا ثبت نام، شماره همراه خود را بدرستی وارد نمایید.
+					شماره همراه می بایست 11 رقمی و به شکل 09125101045 باشد.
+					کد ورود برنامه به شماره همراه شما ارسال خواهد شد.
+				</div>
+			</ion-item>
+		</ion-list>  
+</ion-content>
+<ion-footer>
+			<ion-buttons left>
+				<button  type="submit" ion-button  icon-end   (click)="onLogin()">
+					بعدی
+				</button>
+			</ion-buttons>  
+</ion-footer>

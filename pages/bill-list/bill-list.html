@@ -1,0 +1,64 @@
+<!--
+  Generated template for the BillListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-right>صورت حساب شما</ion-title>
+			<ion-buttons left>
+				<button item-left color="top-button"  ion-button  color="top-button" clear (click)='dismiss()'>
+					<ion-icon  style="zoom:1.5;margin-left: 10px;"   name="md-close" item-start ></ion-icon>
+				</button>
+			</ion-buttons>	
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+			<ion-list item-right>
+				<ion-grid item-right >
+						  <ion-row align-items-end class="listHeader">
+							<ion-col col-3  style="text-align: right">
+								مانده
+							</ion-col>
+							<ion-col  col-3  style="text-align: right">
+								مبلغ
+							</ion-col>
+						  <ion-col   col-6 style="text-align: right">
+								تاريخ/بابت
+							</ion-col>
+						  </ion-row>			
+						  <ion-row align-items-start  inset *ngFor="let item of billList"  class="listRows">
+							<ion-col col-3   style="text-align: right">
+								{{item?.cash}}
+							</ion-col>
+							<ion-col  col-3  style="text-align: right">
+								{{item?.cost}}
+							</ion-col>
+						  <ion-col col-6   style="text-align: right">
+								<span  class="pay_type_{{item?.pay_type}}">{{item?.pay_type_sign}}</span>
+								<br/>
+								{{item?.jdate}}
+								<br/>
+								{{item?.time}}
+								<br/>
+								{{item?.payment_for_type_text}}
+								<br/>
+								{{item?.payment_for_description}}
+							</ion-col>
+						  </ion-row>			
+			</ion-grid>
+				
+			</ion-list>
+			<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+			   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+			 </ion-infinite-scroll>			
+</ion-content>

@@ -1,0 +1,105 @@
+<ion-header>
+<ion-navbar no-border-bottom [(ngModel)]="siteContentNav">
+    <ion-segment  >
+      <ion-segment-button value="myqauestion"  (ionSelect)="myQuestionSelect()">
+        سوالات من
+      </ion-segment-button>
+      <ion-segment-button value="myconsultation" (ionSelect)="myConsultationSelect()">
+        مشاوران من
+      </ion-segment-button>
+      <ion-segment-button value="consultation"  (ionSelect)="consultationSelect()">
+        مشاوره
+      </ion-segment-button>
+    </ion-segment>
+  </ion-navbar>
+   
+</ion-header>
+
+<ion-content>
+
+  
+  	<div [ngSwitch]="siteContentNav">
+		  <ion-list *ngSwitchCase="'myqauestion'"  item-right>
+				<ion-list item-right>
+					<ion-item  text-wrap inset *ngFor="let question of questionList"  item-end  (click)="goToChat(question)">
+						<div>
+								<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="question?.question"> </div>
+						</div>
+						<ion-item no-lines>
+							<ion-avatar  item-end>
+								<img src="{{question?.small_image_path}}"   (load)="question.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!question.loaded">
+								<ion-spinner [ngClass]="{'center':true}" *ngIf="!question.loaded"></ion-spinner>							
+							</ion-avatar >
+							<h2  align="right">{{question?.pn_name}}</h2>
+							<p *ngIf="question.consultation_title > '' " align="right" >مشاور {{question?.consultation_title}}</p>						
+							<p align="right">کد مشاوره : {{question?.cst_id}}</p>
+							<div class="headerStatus" align="right" style="text-align:justify;direction:rtl" >{{question?.status_title}}</div>
+							<div  class="status" align="right">	
+									{{question?.consultation_type_title}}
+									<ion-icon small *ngIf="question.cons_type == 2 " item-end name="logo-usd"></ion-icon>
+							</div>
+						</ion-item>
+					</ion-item>
+				</ion-list>
+				
+				<ion-infinite-scroll (ionInfinite)="doQuestionInfinite($event)">
+				   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+				 </ion-infinite-scroll>
+		  </ion-list>
+		  
+		<ion-list *ngSwitchCase="'myconsultation'" >
+				<ion-list item-right>
+					<ion-item  text-wrap   inset item-end   *ngFor="let item of ConsultationList"  >
+						<ion-list  style="margin:0px;padding:0px;">
+							<ion-item   no-lines   text-wrap   inset style="margin:0px;padding:0px;" (click)="goToConsultationProfile(item)" >
+									<ion-thumbnail    item-end >
+										<img  src="{{item?.image_path}}"   (load)="item.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!item.loaded">
+										<ion-spinner [ngClass]="{'center':true}" *ngIf="!item.loaded"></ion-spinner>
+									</ion-thumbnail  >
+									<br/>
+									<h1  align="right">{{item?.pn_name}}</h1>
+									<h3 align="right">{{item?.education_name}} - {{item?.lang_far_course}}</h3>
+									<p align="right">مشاور {{item?.consultation_title}}</p>
+									<p style="color:maroon;" *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 " align="right">هر دقيقه مشاوره : {{item?.cost_per_minute}}  تومان</p>
+									<p style="color:maroon;" *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 " align="right">حداکثر زمان پاسخگویی : {{item?.answer_time}}  ساعت</p>
+							</ion-item>					
+							<ion-item  *ngIf="item?.cons_type == 1 ||  item?.cons_type == 3 "  no-lines  style="margin:0px;padding:0px;" >
+								  <button ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeFreeQuestion(item)">
+									<ion-icon item-start  name="ios-text-outline"></ion-icon>
+									مشاوره رايگان-با تاخیر
+								  </button>
+							</ion-item>					
+							<ion-item no-lines  style="margin:0px;padding:0px;"  *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 ">
+								  <button  ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeConsultation(item)">
+									<ion-icon item-start  name="ios-chatbubbles"></ion-icon> 
+									مشاوره سريع-بدون تاخیر
+								  </button>
+							</ion-item>		
+							<ion-item no-lines  style="margin:0px;padding:0px;" >
+								  <button ion-button icon-end clear small (click)="removeItem(item)" item-start >
+									<ion-icon name="md-close"></ion-icon> 
+								  </button>
+							</ion-item>					
+							
+						</ion-list>		
+					</ion-item>
+				</ion-list>		
+				<ion-infinite-scroll (ionInfinite)="doInfiniteMyConsultation($event)">
+				   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+				 </ion-infinite-scroll>			
+		</ion-list> 
+		  
+		<ion-list *ngSwitchCase="'consultation'">
+				<ion-refresher (ionRefresh)="doRefreshConsultation($event)">
+				<ion-refresher-content></ion-refresher-content>
+				</ion-refresher>		  
+				<ion-item *ngFor="let  category of categoryList"  (click)="goToConsultationList(category)">
+						  <ion-icon name="arrow-dropleft" item-left></ion-icon>
+						<div item-right style="text-align:justify;direction:rtl">
+							{{category.title}}
+						</div>
+				</ion-item>
+		</ion-list>
+	</div>    
+
+</ion-content>

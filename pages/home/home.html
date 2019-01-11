@@ -1,0 +1,138 @@
+<ion-header>
+
+	<ion-navbar no-border-bottom [(ngModel)]="siteContentNav">
+		<ion-segment  >
+			  <ion-segment-button value="notifications"  (ionSelect)="notificationsList(0)">
+				اعلانها
+			  </ion-segment-button>
+			  <ion-segment-button value="consultation" (ionSelect)="loadConsultationList(0)">
+				مشاوران
+			  </ion-segment-button>
+			  <ion-segment-button value="raznamehHome" (ionSelect)="loadItemList()">
+				خانه
+			  </ion-segment-button>
+		</ion-segment>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  	<div [ngSwitch]="siteContentNav">
+		<ion-list *ngSwitchCase="'raznamehHome'" >
+			  <ion-refresher (ionRefresh)="doRefresh($event)">
+				<ion-refresher-content></ion-refresher-content>
+			  </ion-refresher>
+				<ion-list item-right>
+					<ion-item  text-wrap inset *ngFor="let item of itemsList"  item-end  (click)="goToItemView(item)">
+						<div  style="text-align:justify;direction:rtl" >
+							<span class="headerStatus">{{item?.contentType}}  </span>
+							<br/>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{item?.record_content.lang_far_title}}</h2>
+						</div>
+						<ion-item no-lines>
+							<ion-avatar  item-end>
+								<img src="{{item?.image_path}}"   (load)="item.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!item.loaded">
+									<ion-spinner [ngClass]="{'center':true}" *ngIf="!item.loaded"></ion-spinner>							
+							</ion-avatar >
+							<h2  align="right">{{item?.user_title}}</h2>
+							<p *ngIf="item.consultation_title > '' " align="right" >مشاور {{item?.consultation_title}}</p>						
+						</ion-item>
+					</ion-item>
+				</ion-list>
+				
+				<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+				   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+				 </ion-infinite-scroll>
+		</ion-list>	
+
+		<ion-list *ngSwitchCase="'consultation'" > 
+				<ion-searchbar  dir="rtl"
+				  [(ngModel)]="myInput"
+				  [showCancelButton]="shouldShowCancel"
+				  [debounce]="1000"
+				  (ionInput)="onInput($event ,0)"
+				  (ionCancel)="onSearchCancel($event)">
+				</ion-searchbar>
+		
+				<ion-item    text-wrap   inset *ngFor="let item of ConsultationList"  item-end  >
+					<ion-list  style="margin:0px;padding:0px;">
+						<ion-item no-lines (click)="goToConsultationProfile(item)">
+							<ion-thumbnail    item-end>
+								<img src="{{item?.small_image}}"  (load)="item.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!item.loaded">
+								<ion-spinner [ngClass]="{'center':true}" *ngIf="!item.loaded"></ion-spinner>
+							</ion-thumbnail  >
+								<h1  align="right">{{item?.pn_name}}</h1>
+								<h3 align="right">{{item?.education_name}} - {{item?.lang_far_course}}</h3>
+								<p align="right">مشاور {{item?.consultation_title}}</p>
+								<p style="color:maroon;" *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 " align="right">هر دقيقه مشاوره : {{item?.cost_per_minute}}  تومان</p>
+								<p style="color:maroon;" *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 " align="right">حداکثر زمان پاسخگویی : {{item?.answer_time}}  ساعت</p>
+						</ion-item>
+						<ion-item  no-lines  style="margin:0px;padding:0px;" >
+							  <button  *ngIf="item?.cons_type == 1 ||  item?.cons_type == 3 " ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeFreeQuestion(item)">
+								<ion-icon item-start   name="ios-text-outline"></ion-icon>
+								مشاوره رايگان-با تاخیر
+							  </button>
+						</ion-item>
+						<ion-item  no-lines  style="margin:0px;padding:0px;" >
+							  <button  *ngIf="item?.cons_type == 2 ||  item?.cons_type == 3 " ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeConsultation(item)">
+								<ion-icon item-start   name="ios-chatbubbles"></ion-icon> 
+								مشاوره سريع-بدون تاخیر
+							  </button>
+						</ion-item>
+						
+					</ion-list>
+				</ion-item>
+			<ion-infinite-scroll (ionInfinite)="doConsultationInfinite($event)">
+			   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+			 </ion-infinite-scroll>				
+		</ion-list>	
+		
+		<ion-list *ngSwitchCase="'discounts'" >
+			<ion-item text-wrap  text-right class="warning" >
+			<button ion-button full   text-wrap  (click)='discountCode()'>در صورتیکه دارای کد تخفیف هستید از اين بخش در سیستم ثبت نمایید</button>
+			</ion-item>
+		
+				<ion-list item-center>
+					<ion-item  text-wrap inset *ngFor="let ditem of discountItems "  text-center  >
+								<img align="center" src="{{ditem?.image}}"  (load)="ditem.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!ditem.loaded">
+								<ion-spinner [ngClass]="{'center':true}" *ngIf="!ditem.loaded"></ion-spinner>
+								<h2  >{{ditem?.discount_type_title}}</h2>
+								<br/>
+								<h3 class="discount_percent"> {{ditem?.discount}} %</h3>
+								<br/>
+								<p class="status_class">{{ditem?.used_title}}
+									<span  *ngIf="ditem?.used == 2 "  style="color:maroon;">  در تاریخ  {{ditem?.jused_date}}  ساعت  {{ditem?.used_time}}</span>
+									<span  *ngIf="ditem?.limit_offer == 1 && ditem?.used == 0 "  style="color:maroon;">  تا تاریخ  {{ditem?.jend_date}}</span>
+									<span  *ngIf="ditem?.limit_offer != 1 && ditem?.used == 0 "  style="color:maroon;"> بدون محدوديت زمانی</span>
+								</p>
+								
+					</ion-item>
+				</ion-list>
+		
+		
+				<ion-infinite-scroll (ionInfinite)="doDiscountsInfinite($event)">
+					<ion-infinite-scroll-content></ion-infinite-scroll-content>
+				</ion-infinite-scroll>				
+		</ion-list>			
+		
+		<ion-list *ngSwitchCase="'notifications'" >
+							<ion-card *ngFor="let notItem of notItems "  (click)="goToNotification(notItem)">
+								<ion-card-content text-right>
+										<ion-item  text-right text-wrap inset  >
+											<ion-avatar  item-end *ngIf="notItem?.image > '' " >
+												<img align="center" src="{{notItem?.image}}"  (load)="notItem.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!notItem.loaded">
+												<ion-spinner [ngClass]="{'center':true}" *ngIf="!notItem.loaded"></ion-spinner>
+											</ion-avatar >
+											<p>{{notItem?.description}}</p>
+											<br/>
+											<br/>
+											<div align="left" class="notification">{{notItem?.jsubmit_date}}</div>
+										</ion-item>
+								</ion-card-content>
+							</ion-card>					
+				<ion-infinite-scroll (ionInfinite)="doNotInfinite($event)">
+					<ion-infinite-scroll-content></ion-infinite-scroll-content>
+				</ion-infinite-scroll>				
+		</ion-list>	
+	</div>			
+</ion-content>

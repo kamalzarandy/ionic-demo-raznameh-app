@@ -1,0 +1,59 @@
+<!--
+  Generated template for the Makeconsultation2Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar > 
+		<ion-navbar>
+			<ion-buttons left>
+				<button item-left  ion-button clear color="top-button"  (click)='dismiss()'>
+					<ion-icon  style="zoom:1.5;margin-left: 10px;"   name="md-close" item-start ></ion-icon>
+				</button>	
+						
+				<button item-left  ion-button clear color="top-button"  (click)='submitQuestion()'>
+					<ion-icon  style="zoom:1.5;margin-left: 20px;"  name="md-checkmark" item-start ></ion-icon>
+				</button>	
+			</ion-buttons>
+		</ion-navbar>
+	</ion-navbar>	  
+
+
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-list>
+		<ion-item  no-lines text-wrap >
+			<ion-thumbnail    item-end>
+				<img src="{{userProfile?.small_image}}"  (load)="userProfileloaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!userProfileloaded">
+				<ion-spinner [ngClass]="{'center':true}" *ngIf="!userProfileloaded"></ion-spinner>
+			</ion-thumbnail  >
+				<h1  align="right">{{userProfile?.pn_name}}</h1>
+				<h3 align="right">{{userProfile?.education_name}} - {{userProfile?.lang_far_course}}</h3>
+				<p align="right">مشاور {{userProfile?.consultation_title}}</p>
+				<p align="right">هر دقيقه مشاوره : {{userProfile?.cost_per_minute}}  تومان</p>
+				<br/>
+				<p style="color:maroon;" align="right">درخواست {{conTime}}  دقیقه مشاوره با هزينه {{conCost}}   تومان</p>
+		</ion-item>
+	
+		<ion-item  >
+			<ion-label stacked  text-right   color="primary" >موضوع سوال</ion-label>
+			<ion-textarea item-right cols='50' [(ngModel)]="question"   name="question" placeholder="بطور خلاصه موضوع مورد سوال را در اين بخش درج نمایید"></ion-textarea>
+		</ion-item> 
+		<ion-item>
+			<ion-label  stacked text-right   color="primary">پست الکترونیکی</ion-label>
+			<ion-input text-right type="email" placeholder="ورود پست الکترونیکی"  [(ngModel)]="email" name="email"  type="text"  spellcheck="false" 	required>
+			</ion-input>
+		</ion-item>		
+		<ion-item>
+			<ion-label  stacked text-right   color="primary">شماره همراه</ion-label>
+			<ion-input text-right type="number"  maxlength="11" placeholder="شماره موبايل 11 رقم و با صفر وارد شود" [(ngModel)]="mobile" name="mobile"   type="text"  spellcheck="false" 	required>
+			</ion-input>
+		</ion-item>
+
+	</ion-list>
+</ion-content>

@@ -1,0 +1,158 @@
+<!--
+  Generated template for the ConsultationProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+		<ion-item color="navbar"  text-wrap  no-lines >
+			<h2  class='header' align="right" style="text-align:justify;direction:rtl" >{{ userTitle }}</h2>
+		</ion-item>	
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+			<button ion-button full >کد مشاور : {{uid}}</button>
+
+	<ion-card>
+	  <ion-card-header text-center>
+	  	<img  src="{{userProfile?.small_image}}" class="img-thumbnail"  (load)="loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!loaded">
+		<ion-spinner [ngClass]="{'center':true}" *ngIf="!loaded"></ion-spinner>
+		
+	  </ion-card-header>
+	  <ion-card-content text-right>
+		<h1>{{userProfile?.pn_name}}</h1>
+		<h2 *ngIf="userProfile?.is_consultation > 0 " align="right">مشاور {{userProfile?.consultation_title}}</h2>
+		<h3 align="right">{{userProfile?.education_name}} - {{userProfile?.lang_far_course}} </h3>
+		<p align="right">شغل : {{userProfile?.lang_far_job}}</p>	  
+			<ion-item  no-lines  style="margin:0px;padding:0px;" *ngIf="userProfile?.is_consultation > 0 && userProfile?.cons_type == 1 ||  userProfile?.cons_type == 3">
+				  <button  ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeFreeQuestion(userProfile)">
+					<ion-icon item-start   name="ios-text-outline"></ion-icon>
+					مشاوره رايگان-با تاخیر
+				  </button>
+			</ion-item>	  
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="userProfile?.is_consultation > 0 && userProfile?.cons_type == 2 ||  userProfile?.cons_type == 3 ">
+	  <ion-card-content text-right>
+			<ion-item  no-lines style="margin:0px;padding:0px;"  *ngIf="userProfile?.is_consultation > 0 " text-wrap>	  
+				<p style="color:maroon;" *ngIf="userProfile?.cons_type == 2 ||  userProfile?.cons_type == 3 " align="right">
+				هر دقيقه مشاوره : {{userProfile?.cost_per_minute}}  تومان	،	حداکثر زمان پاسخگویی : {{userProfile?.answer_time}}  ساعت
+				</p>
+			</ion-item>	  
+			<ion-item  no-lines  style="margin:0px;padding:0px;" *ngIf="userProfile?.is_consultation > 0 && userProfile?.cons_type == 2 ||  userProfile?.cons_type == 3 ">
+				  <button  ion-button item-start  icon-right   clear small  color="fotterButton" (click)="makeConsultation(userProfile)">
+					<ion-icon item-start   name="ios-chatbubbles"></ion-icon> 
+					مشاوره سريع-بدون تاخیر
+				  </button>
+			</ion-item>	  
+	  
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="userProfile?.is_consultation > 0 && userProfile?.cons_type == 2 ||  userProfile?.cons_type == 3 ">
+	  <ion-card-header text-right item-end>
+				<h2>برنامه حضور در هفته</h2>  					
+	  </ion-card-header>
+	  <ion-card-content text-right >
+		   <ion-grid>
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_1}}
+							</div>
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:شنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_2}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:یکشنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_3}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							 :دوشنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_4}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:سه شنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_5}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:چهارشنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_6}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:پنجشنبه
+						</ion-col>
+				 </ion-row>		
+				 <ion-row>
+					    <ion-col>
+							<div  style="text-align:justify;direction:rtl" >
+								{{userProfile?.week_7}}
+							</div>						
+						</ion-col>
+					    <ion-col class='weekClass'>
+							:جمعه
+						</ion-col>
+				 </ion-row>		
+		   </ion-grid>
+
+	  </ion-card-content>
+	</ion-card>
+	<ion-card>
+	  <ion-card-content text-right>
+		<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="description"> </div>
+			<ion-item  (click)="goToContentList(userProfile ,1)">
+				<button ion-button item-end  clear small  color="button2" >
+					تعداد مطالب ثبت شده
+				</button>
+				<ion-badge item-start  color="button2" >{{userProfile?.contentCount}}</ion-badge>
+			</ion-item>	  
+			<ion-item (click)="goToContentList(userProfile ,2)" >
+				<button ion-button item-end  clear small  color="button2" >
+					تعداد مشاوره
+				</button>
+				<ion-badge item-start  color="button2" >{{userProfile?.faqCount}}</ion-badge>
+			</ion-item>	  
+			<ion-item  no-lines style="margin:0px;padding:0px;"  *ngIf="userProfile?.is_consultation > 0 " >	  
+			  <button ion-button item-start   icon-right  clear small color="fotterButton" (click)="addToFavorite(userProfile)">
+				<ion-icon item-start  name="ios-bookmark"></ion-icon>
+				افزودن به علاقه منديها
+			  </button>
+			</ion-item>	 		
+	  </ion-card-content>
+	</ion-card>
+	  
+</ion-content>

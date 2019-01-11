@@ -1,0 +1,33 @@
+<!--
+  Generated template for the NotificationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar>
+		<ion-buttons left>
+			<button item-left color="top-button"  ion-button  color="top-button" clear (click)='dismiss()'>
+				<ion-icon  style="zoom:1.5;margin-left: 10px;"   name="md-close" item-start ></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-card>
+		<ion-card-content text-right>
+			<div *ngIf="item?.image > '' " >
+				<img (click)='showImage(item)' align="center" src="{{item?.image}}"  (load)="item.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!item.loaded">
+				<ion-spinner  [ngClass]="{'center':true}" *ngIf="!item.loaded"></ion-spinner>
+			</div>
+			<br/>
+			<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="output"> </div>
+			<br/>
+			<a target="_blank"  *ngIf="item?.file > '' "   href="{{item?.file}}">دریافت فایل</a>			
+			<br/>
+			<div align="left" class="notification">{{item?.jsubmit_date}}</div>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

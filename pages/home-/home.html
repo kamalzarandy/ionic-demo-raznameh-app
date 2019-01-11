@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>
+  <button ion-button (click)="startRecording(1)">Start recording-nodestination</button>
+</p>
+<p>
+  <button  ion-button (click)="stopRecording()">Stop recording</button>
+</p>
+<p>
+  <button  ion-button (click)="startPlayback()">Start playback</button>
+</p>
+<p>
+  <button  ion-button (click)="stopPlayback()">Stop playback</button>
+</p>
+
+  <button  ion-button (click)="startRecording(2)">cordova.file.dataDirectory</button>
+  <button  ion-button (click)="startRecording(3)">cordova.file.externalRootDirectory</button>
+  <button  ion-button (click)="startRecording(4)">cordova.file.tempDirectory</button>
+
+    <button  ion-button (click)="startNew(1)">new record</button>
+  <button  ion-button (click)="stopNew()">new stop</button>
+  <button  ion-button (click)="playNew()">new play </button>
+  
+    <button  ion-button (click)="startNew(2)">startNew cordova.file.dataDirectory</button>
+  <button  ion-button (click)="startNew(3)">startNew raznameh cordova.file.externalRootDirectory</button>
+  <button  ion-button (click)="startNew(4)">startNew cordova.file.tempDirectory</button>
+  <button  ion-button (click)="createdirecroty(2)">createdirectory dataDirectory</button>
+  <button  ion-button (click)="createdirecroty(3)">createdirectory externalRootDirectory</button>
+  <button  ion-button (click)="createdirecroty(4)">createdirectory applicationDirectory</button>
+
+
+</ion-content>

@@ -1,0 +1,157 @@
+ALTER TABLE `cnt_content_user` ADD `education_des` TEXT NOT NULL AFTER `service_location`, ADD `min_cons_time` TIME NOT NULL AFTER `education_des`, ADD `min_cons_cost` INT NOT NULL AFTER `min_cons_time`, ADD `cost_per_minute` INT NOT NULL AFTER `min_cons_cost`, ADD `work_experience_count` SMALLINT NOT NULL AFTER `cost_per_minute`;
+
+
+ALTER TABLE `cnt_content_user` ADD `email_newsletter`  BOOLEAN NOT NULL DEFAULT '0' AFTER `work_experience_count`, 
+ADD `sms_newsletter`  BOOLEAN NOT NULL DEFAULT '0' AFTER `email_newsletter`;
+
+
+drop view if exists view_content_user;
+CREATE  VIEW `view_content_user` AS 
+select cnu.`email_newsletter`, cnu.`sms_newsletter`,`usr`.`random` AS `random`,`cnu`.`tel1` AS `tel1`,`cnu`.`fax` AS `fax`,`cnu`.`ostan` AS `ostan`,`cnu`.`lang_far_address` AS `lang_far_address`,`cnu`.`lang_far_work` AS `lang_far_work`,`cnu`.`cni_id` AS `cni_id`,`cnu`.`uid` AS `uid`,`cnu`.`lang_far_title` AS `lang_far_title`,`cnu`.`lang_far_city` AS `lang_far_city`,`cnu`.`lang_eng_city` AS `lang_eng_city`,`cnu`.`lang_eng_title` AS `lang_eng_title`,`cnu`.`user_type` AS `user_type`,`cnu`.`sex` AS `sex`,`cnu`.`age` AS `age`,`cnu`.`image_path` AS `image_path`,`cnu`.`birth_date` AS `birth_date`,`cnu`.`education` AS `education`,`cnu`.`lang_far_course` AS `lang_far_course`,`cnu`.`lang_eng_course` AS `lang_eng_course`,`cnu`.`lang_far_job` AS `lang_far_job`,`cnu`.`lang_eng_job` AS `lang_eng_job`,`cnu`.`email` AS `email`,`cnu`.`org_email` AS `org_email`,`cnu`.`establish_date` AS `establish_date`,`cnu`.`org_type` AS `org_type`,`cnu`.`lang_far_manager` AS `lang_far_manager`,`cnu`.`lang_eng_manager` AS `lang_eng_manager`,`cnu`.`org_image_path` AS `org_image_path`,`cnu`.`is_consultation` AS `is_consultation`,`cnu`.`consultation_title` AS `consultation_title`,`cnu`.`consultation_description` AS `consultation_description`,`con`.`cnt_type` AS `cnt_type`,`usr`.`pn_user_viewemail` AS `pn_user_viewemail`,`usr`.`join_expert_list` AS `join_expert_list`,`usr`.`pn_uid` AS `pn_uid`,`usr`.`pn_name` AS `pn_name`,`usr`.`pn_uname` AS `pn_uname`,`usr`.`pn_email` AS `pn_email`,`usr`.`pn_femail` AS `pn_femail`,`usr`.`complete_profile` AS `complete_profile`,`usr`.`mobile` AS `mobile`,`usr`.`mobile_is_valid` AS `mobile_is_valid`,`usr`.`valid_email` AS `valid_email`,`usr`.`last_update` AS `last_update`,`usr`.`user_status` AS `user_status`,`prt`.`short_view_access` AS `short_view_access`,`prt`.`prt_itm_id` AS `prt_itm_id`,`prt`.`mod_name` AS `mod_name`,`prt`.`mod_section_name` AS `mod_section_name`,`prt`.`module_section_2` AS `module_section_2`,`prt`.`mod_record_id` AS `mod_record_id`,`prt`.`record_parameter` AS `record_parameter`,`prt`.`submit_date` AS `submit_date`,`prt`.`update_date` AS `update_date`,`prt`.`flow_state` AS `flow_state`,`prt`.`site_id` AS `site_id`,`prt`.`item_classification` AS `item_classification`,`prt`.`access_url` AS `access_url`,`prt`.`view_record_url` AS `view_record_url`,`prt`.`submitter_id` AS `submitter_id`,`prt`.`title_field_name` AS `title_field_name`,`prt`.`description_field_name` AS `description_field_name`,`prt`.`multy_language` AS `multy_language`,`prt`.`last_events` AS `last_events`,`prt`.`events_count` AS `events_count`,`prt`.`page_title` AS `page_title`,`prt`.`page_meta_description` AS `page_meta_description`,`prt`.`page_keyword` AS `page_keyword`,`prt`.`automate_id` AS `automate_id`,`prt`.`rating_value` AS `rating_value`,`prt`.`rating_submited_user_count` AS `rating_submited_user_count`,`prt`.`rating_guest_user_count` AS `rating_guest_user_count`,`prt`.`rating_last_date` AS `rating_last_date`,`prt`.`rating_groups` AS `rating_groups`,`prt`.`rating_submited_user_rate` AS `rating_submited_user_rate`,`prt`.`rating_guest_user_rate` AS `rating_guest_user_rate`,`prt`.`visit_submited_user` AS `visit_submited_user`,`prt`.`visit_guest_user` AS `visit_guest_user`,`prt`.`visit_last_date` AS `visit_last_date`,`prt`.`comment_submited_user_count` AS `comment_submited_user_count`,`prt`.`comment_guest_user_count` AS `comment_guest_user_count`,`prt`.`faq_submited_user_count` AS `faq_submited_user_count`,`prt`.`faq_guest_user_count` AS `faq_guest_user_count`,`prt`.`comment_last_submit_date` AS `comment_last_submit_date`,`prt`.`faq_last_submit_date` AS `faq_last_submit_date`,`prt`.`visit_count` AS `visit_count`,`prt`.`comment_count` AS `comment_count`,`prt`.`faq_count` AS `faq_count`,`prt`.`suggest_keyword` AS `suggest_keyword`,`prt`.`cash_date` AS `cash_date`,`prt`.`filter_text_1` AS `filter_text_1`,`prt`.`filter_text_2` AS `filter_text_2`,`prt`.`filter_int_1` AS `filter_int_1`,`prt`.`filter_int_2` AS `filter_int_2`,`prt`.`security_type` AS `security_type`,`prt`.`security_code` AS `security_code`,`prt`.`verified` AS `verified`,`prt`.`security_group_short_view` AS `security_group_short_view`,`prt`.`security_group_full_view` AS `security_group_full_view`,`prt`.`security_group_edit` AS `security_group_edit`,`prt`.`security_group_delete` AS `security_group_delete`,`prt`.`security_group_change_flow` AS `security_group_change_flow`,`prt`.`security_group_classification` AS `security_group_classification`,`prt`.`security_user_full_view` AS `security_user_full_view`,`prt`.`security_user_edit` AS `security_user_edit`,`prt`.`security_user_delete` AS `security_user_delete`,`prt`.`security_user_change_flow` AS `security_user_change_flow`,`prt`.`security_user_classification` AS `security_user_classification`,`prt`.`security_user_short_view` AS `security_user_short_view`,`prt`.`visable` AS `visable`,`prt`.`ip` AS `ip`,`prt`.`domain` AS `domain`,`prt`.`work_flow_id` AS `work_flow_id`,`prt`.`work_flow_name` AS `work_flow_name`,`prt`.`work_flow_step` AS `work_flow_step` 
+from (((`cnt_content_user` `cnu` join `cnt_content_items` `con` on(((`cnu`.`cni_id` = `con`.`cni_id`) and (`cnu`.`user_type` = 1)))) join `pn_users` `usr` on((`cnu`.`uid` = `usr`.`pn_uid`))) join `prt_portal_items` `prt` on(((`cnu`.`cni_id` = `prt`.`mod_record_id`) and (`prt`.`mod_name` = _utf8'Content') and (`prt`.`mod_section_name` = _utf8'content_user'))));
+
+
+
+CREATE TABLE IF NOT EXISTS `adt_user_access_info` (
+  `uai_id` bigint(20) NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `visit_date` datetime DEFAULT NULL,
+  `ip` varchar(15) DEFAULT NULL,
+  `platform` varchar(50) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `versions` varchar(100) DEFAULT NULL,
+  `lang` varchar(10) DEFAULT NULL,
+  `app_version` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `adt_user_access_info`
+  ADD PRIMARY KEY (`uai_id`);
+
+ALTER TABLE `adt_user_access_info`
+  MODIFY `uai_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+
+
+ALTER TABLE `pn_users` ADD `mobile_device` TINYINT NOT NULL DEFAULT '0' AFTER `virtual_visit_step`;
+
+ALTER TABLE `pn_users` ADD `last_mobile_activity` DATETIME NULL AFTER `mobile_device`;
+
+
+CREATE TABLE IF NOT EXISTS `pn_code_request` (
+  `cre_id` bigint(20) NOT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `code` varchar(100) NOT NULL,
+  `request_date` datetime NOT NULL,
+  `ip` varchar(16) NOT NULL,
+  `agent` varchar(20) NOT NULL,
+  `try_count` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `pn_code_request`
+  ADD PRIMARY KEY (`cre_id`);
+
+ALTER TABLE `pn_code_request`
+  MODIFY `cre_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
+
+
+CREATE TABLE IF NOT EXISTS `pn_user_pass` (
+  `ups_id` bigint(20) NOT NULL,
+  `pn_uid` int(11) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `pass` varchar(40) NOT NULL,
+  `submit_date` datetime NOT NULL,
+  `last_active_time` datetime NOT NULL,
+  `ip` varchar(16) NOT NULL,
+  `browser` varchar(15) DEFAULT NULL,
+  `browser_version` varchar(15) DEFAULT NULL,
+  `os` varchar(15) DEFAULT NULL,
+  `pass_expire_time` datetime NOT NULL,
+  `token_expire_time` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `pn_user_pass`
+  ADD PRIMARY KEY (`ups_id`);
+
+ALTER TABLE `pn_user_pass`
+  MODIFY `ups_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
+
+
+CREATE TABLE IF NOT EXISTS `consultation_week_program` (
+  `cwp_id` bigint(20) NOT NULL,
+  `pn_uid` bigint(20) NOT NULL,
+  `online_date` date NOT NULL,
+  `predict_time_from` time NOT NULL,
+  `predict_time_to` time NOT NULL,
+  `time_from` time DEFAULT NULL,
+  `time_to` time DEFAULT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `consultation_week_program`
+  ADD PRIMARY KEY (`cwp_id`);
+
+ALTER TABLE `consultation_week_program`
+  MODIFY `cwp_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
+  
+  
+
+CREATE TABLE IF NOT EXISTS `user_favorites` (
+  `ufa_id` bigint(20) NOT NULL,
+  `pn_uid` bigint(20) NOT NULL,
+  `submit_date` datetime NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `item_id` bigint(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `user_favorites`
+  ADD PRIMARY KEY (`ufa_id`);
+
+ALTER TABLE `user_favorites`
+  MODIFY `ufa_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
+
+
+
+drop view if EXISTS view_content_user_consultation;
+CREATE  VIEW `view_content_user_consultation` 
+AS 
+select 
+`cnu`.lang_far_work as lang_far_work,
+`cnu`.`cni_id` AS `cni_id`,`cnu`.`uid` AS `uid`,`cnu`.`lang_far_title` AS `lang_far_title`,`cnu`.`lang_eng_title` AS `lang_eng_title`,
+`cnu`.`user_type` AS `user_type`,`cnu`.`sex` AS `sex`,`cnu`.`age` AS `age`,`cnu`.`image_path` AS `image_path`,`cnu`.`education` AS `education`,
+`cnu`.`lang_far_course` AS `lang_far_course`,`cnu`.`lang_eng_course` AS `lang_eng_course`,`cnu`.`lang_far_job` AS `lang_far_job`,`cnu`.`lang_eng_job` AS `lang_eng_job`,
+`cnu`.`org_image_path` AS `org_image_path`,`cnu`.`is_consultation` AS `is_consultation`,`cnu`.`consultation_title` AS `consultation_title`,`con`.`cnt_type` AS `cnt_type`,
+`usr`.`pn_uid` AS `pn_uid`,`cnu`.`consultation_type_1` AS `consultation_type_1`,`cnu`.`consultation_type_2` AS `consultation_type_2`,
+`cnu`.`consultation_type_3` AS `consultation_type_3`,`usr`.`pn_name` AS `pn_name`,`usr`.`mobile` AS `mobile`,`usr`.`pn_uname` AS `pn_uname`,`usr`.`pn_email` AS `pn_email`,
+`usr`.`pn_femail` AS `pn_femail`,`usr`.`last_login_date` AS `last_login_date`,`prt`.`short_view_access` AS `short_view_access`,`prt`.`prt_itm_id` AS `prt_itm_id`,
+`prt`.`mod_name` AS `mod_name`,`prt`.`mod_section_name` AS `mod_section_name`,`prt`.`module_section_2` AS `module_section_2`,`prt`.`mod_record_id` AS `mod_record_id`,
+`prt`.`record_parameter` AS `record_parameter`,`prt`.`submit_date` AS `submit_date`,`prt`.`update_date` AS `update_date`,`prt`.`flow_state` AS `flow_state`,
+`prt`.`site_id` AS `site_id`,`prt`.`item_classification` AS `item_classification`,`prt`.`access_url` AS `access_url`,`prt`.`view_record_url` AS `view_record_url`,
+`prt`.`submitter_id` AS `submitter_id`,`prt`.`title_field_name` AS `title_field_name`,`prt`.`description_field_name` AS `description_field_name`,
+`prt`.`multy_language` AS `multy_language`,`prt`.`last_events` AS `last_events`,`prt`.`events_count` AS `events_count`,`prt`.`page_title` AS `page_title`,
+`prt`.`page_meta_description` AS `page_meta_description`,`prt`.`page_keyword` AS `page_keyword`,`prt`.`automate_id` AS `automate_id`,`prt`.`rating_value` AS `rating_value`,
+`prt`.`rating_submited_user_count` AS `rating_submited_user_count`,`prt`.`rating_guest_user_count` AS `rating_guest_user_count`,`prt`.`rating_last_date` AS `rating_last_date`,
+`prt`.`rating_groups` AS `rating_groups`,`prt`.`rating_submited_user_rate` AS `rating_submited_user_rate`,`prt`.`rating_guest_user_rate` AS `rating_guest_user_rate`,
+`prt`.`visit_submited_user` AS `visit_submited_user`,`prt`.`visit_guest_user` AS `visit_guest_user`,`prt`.`visit_last_date` AS `visit_last_date`,
+`prt`.`comment_submited_user_count` AS `comment_submited_user_count`,`prt`.`comment_guest_user_count` AS `comment_guest_user_count`,`prt`.`faq_submited_user_count` AS `faq_submited_user_count`,`prt`.`faq_guest_user_count` AS `faq_guest_user_count`,
+`prt`.`comment_last_submit_date` AS `comment_last_submit_date`,`prt`.`faq_last_submit_date` AS `faq_last_submit_date`,`prt`.`visit_count` AS `visit_count`,`prt`.`comment_count` AS `comment_count`,`prt`.`faq_count` AS `faq_count`,`prt`.`suggest_keyword` AS `suggest_keyword`,`prt`.`cash_date` AS `cash_date`,
+`prt`.`filter_text_1` AS `filter_text_1`,`prt`.`filter_text_2` AS `filter_text_2`,`prt`.`filter_int_1` AS `filter_int_1`,`prt`.`filter_int_2` AS `filter_int_2`,`prt`.`security_type` AS `security_type`,`prt`.`security_code` AS `security_code`,`prt`.`verified` AS `verified`,`prt`.`security_group_short_view` AS `security_group_short_view`,
+`prt`.`security_group_full_view` AS `security_group_full_view`,`prt`.`security_group_edit` AS `security_group_edit`,`prt`.`security_group_delete` AS `security_group_delete`,`prt`.`security_group_change_flow` AS `security_group_change_flow`,`prt`.`security_group_classification` AS `security_group_classification`,`prt`.`security_user_full_view` AS `security_user_full_view`,`prt`.`security_user_edit` AS `security_user_edit`,
+`prt`.`security_user_delete` AS `security_user_delete`,`prt`.`security_user_change_flow` AS `security_user_change_flow`,`prt`.`security_user_classification` AS `security_user_classification`,`prt`.`security_user_short_view` AS `security_user_short_view`,`prt`.`visable` AS `visable`,`prt`.`ip` AS `ip`,`prt`.`domain` AS `domain`,`prt`.`work_flow_id` AS `work_flow_id`,`prt`.`work_flow_name` AS `work_flow_name`,
+`prt`.`work_flow_step` AS `work_flow_step`,`cnu`.`education_des` AS `education_des`,`cnu`.`min_cons_time` AS `min_cons_time`,`cnu`.`min_cons_cost` AS `min_cons_cost`,`cnu`.`cost_per_minute` AS `cost_per_minute`,`cnu`.`work_experience_count` AS `work_experience_count`,
+if(isnull((select `ups`.`pn_uid`  from `pn_user_pass` `ups` where ((`ups`.`pn_uid` = `cnu`.`uid`) and (`ups`.`last_active_time` >= (now() - interval 600 second))) limit 1)),0,1) AS `user_status` 
+from (((`cnt_content_user` `cnu` join `cnt_content_items` `con` on(((`cnu`.`cni_id` = `con`.`cni_id`) and (`cnu`.`is_consultation` >= 1)))) join `pn_users` `usr` on(((`cnu`.`uid` = `usr`.`pn_uid`) and (`usr`.`is_consultation` = 1)))) join `prt_portal_items` `prt` on(((`cnu`.`cni_id` = `prt`.`mod_record_id`) and (`prt`.`mod_name` = _utf8'Content') and (`prt`.`mod_section_name` = _utf8'content_user')))) order by `cnu`.`is_consultation` desc;
+
+
+
+ALTER TABLE `cst_consultation` ADD `bymobile` TINYINT NOT NULL DEFAULT '0' AFTER `classification`;
+
+drop view if exists view_content_all_user ;
+CREATE  VIEW `view_content_all_user` AS 
+select `usr`.`virtual_visit_step` AS `virtual_visit_step`,`usr`.`pn_user_regdate` AS `submit_date`,`cnu`.`org_image_path` AS `org_image_path`,rand() AS `random`,`cnu`.`site_id` AS `site_id`,`cnu`.`cni_id` AS `cni_id`,`cnu`.`uid` AS `uid`,`cnu`.`lang_far_title` AS `lang_far_title`,`cnu`.`lang_eng_title` AS `lang_eng_title`,`cnu`.`user_type` AS `user_type`,`cnu`.`sex` AS `sex`,`cnu`.`age` AS `age`,`cnu`.`image_path` AS `image_path`,`cnu`.`birth_date` AS `birth_date`,`cnu`.`education` AS `education`,`cnu`.`lang_far_course` AS `lang_far_course`,`cnu`.`lang_eng_course` AS `lang_eng_course`,`cnu`.`lang_far_job` AS `lang_far_job`,`cnu`.`lang_eng_job` AS `lang_eng_job`,`cnu`.`is_consultation` AS `is_consultation`,`cnu`.`consultation_title` AS `consultation_title`,`cnu`.`consultation_description` AS `consultation_description`,`con`.`cnt_type` AS `cnt_type`,`usr`.`pn_user_viewemail` AS `pn_user_viewemail`,`usr`.`join_expert_list` AS `join_expert_list`,`usr`.`pn_uid` AS `pn_uid`,`usr`.`pn_name` AS `pn_name`,`usr`.`pn_uname` AS `pn_uname`,`usr`.`pn_email` AS `pn_email`,`usr`.`pn_femail` AS `pn_femail`,`usr`.`complete_profile` AS `complete_profile`,`usr`.`last_update` AS `last_update`,`usr`.`user_status` AS `user_status`,`prt`.`short_view_access` AS `short_view_access`,`prt`.`prt_itm_id` AS `prt_itm_id`,`prt`.`item_classification` AS `item_classification`,`prt`.`access_url` AS `access_url`,`prt`.`view_record_url` AS `view_record_url`,`prt`.`filter_text_1` AS `filter_text_1`,`prt`.`filter_text_2` AS `filter_text_2`,`prt`.`filter_int_1` AS `filter_int_1`,`prt`.`filter_int_2` AS `filter_int_2`,`prt`.`security_type` AS `security_type`,`prt`.`security_code` AS `security_code`,`prt`.`verified` AS `verified`,`prt`.`security_group_short_view` AS `security_group_short_view`,`prt`.`security_group_full_view` AS `security_group_full_view`,`prt`.`security_group_edit` AS `security_group_edit`,`prt`.`security_group_delete` AS `security_group_delete`,`prt`.`security_group_change_flow` AS `security_group_change_flow`,`prt`.`security_group_classification` AS `security_group_classification`,`prt`.`security_user_full_view` AS `security_user_full_view`,`prt`.`security_user_edit` AS `security_user_edit`,`prt`.`security_user_delete` AS `security_user_delete`,`prt`.`security_user_change_flow` AS `security_user_change_flow`,`prt`.`security_user_classification` AS `security_user_classification`,`prt`.`security_user_short_view` AS `security_user_short_view`,`prt`.`visable` AS `visable`,`prt`.`update_date` AS `update_date`,cnu.email_newsletter,cnu.sms_newsletter,cnu.fax,cnu.tel1,cnu.ostan,cnu.lang_far_address,cnu.lang_far_work,cnu.lang_far_city,cnu.email,cnu.org_email,cnu.establish_date,cnu.org_type,
+
+cnu.lang_far_manager,usr.mobile,usr.mobile_is_valid,usr.valid_email,prt.mod_name,prt.mod_section_name,prt.mod_record_id
+
+
+from (((`cnt_content_user` `cnu` join `cnt_content_items` `con` on((`cnu`.`cni_id` = `con`.`cni_id`))) join `pn_users` `usr` on((`cnu`.`uid` = `usr`.`pn_uid`))) join `prt_portal_items` `prt` on(((`cnu`.`cni_id` = `prt`.`mod_record_id`) and (`prt`.`mod_name` = 'Content') and (`prt`.`mod_section_name` = 'content_user')))) where ((`usr`.`join_expert_list` = 1) or (`cnu`.`user_type` = 2) or (`cnu`.`user_type` = 1));
+

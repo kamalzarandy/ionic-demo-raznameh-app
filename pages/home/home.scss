@@ -1,0 +1,30 @@
+page-home {
+	.headerStatus{
+		text-color:#751B07;
+		color:maroon;
+		font-weight:bold;
+	}
+	.headerStatus{
+		text-color:#751B07;
+		color:#751B07;
+	}
+	.img-loaded + ion-spinner {
+	  display:none;
+	}
+	.center{
+	  margin-left: auto;
+	  margin-right: auto;
+	  display: block;
+	}
+	.status_class{
+		color:maroon;
+		font-weight:bold;
+	}
+	.discount_percent{
+		font-weight:bold;
+	}
+	.notification{
+		color:maroon;
+		font-size:small;
+	}
+}

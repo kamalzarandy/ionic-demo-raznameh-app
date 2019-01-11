@@ -1,0 +1,10 @@
+page-chat {
+	.img-loaded + ion-spinner {
+	  display:none;
+	}
+	.center{
+	  margin-left: auto;
+	  margin-right: auto;
+	  display: block;
+	}
+}

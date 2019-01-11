@@ -1,0 +1,83 @@
+<ion-header>
+<ion-navbar no-border-bottom [(ngModel)]="siteContentNav">
+    <ion-segment>
+      <ion-segment-button value="search" >
+        جستجوی اطلاعات
+      </ion-segment-button>      
+      <ion-segment-button value="favorites"  (ionSelect)="myFavoritesSelect()">
+        مطالب مورد علاقه
+      </ion-segment-button>      
+	  <ion-segment-button value="siteContent"  (ionSelect)="loadCategory(2)">
+        اطلاعات سايت
+      </ion-segment-button>
+    </ion-segment>
+  </ion-navbar>
+   
+</ion-header> 
+
+<ion-content ng-app="appContent"  ng-controller="appContent">
+  
+	<div [ngSwitch]="siteContentNav">
+		  <ion-list *ngSwitchCase="'siteContent'"  item-right>
+				<ion-refresher (ionRefresh)="doRefresh($event)">
+				<ion-refresher-content></ion-refresher-content>
+				</ion-refresher>			  
+				<ion-item *ngFor="let  category of categoryList"  (click)="goToCategoryListPage(category)">
+						<ion-icon name="arrow-dropleft" item-left></ion-icon>
+						<div item-right style="text-align:justify;direction:rtl">
+							{{category.title}}
+						</div>
+				</ion-item>
+		  </ion-list>
+
+		  <ion-list *ngSwitchCase="'favorites'">
+				<ion-item  text-wrap inset *ngFor="let item of itemsList"  item-end  (click)="goToItemView(item)">
+					<div>
+						<h2 align="right" style="text-align:justify;direction:rtl" >{{item?.record_content.lang_far_title}}</h2>
+					</div>
+					<ion-item no-lines>
+						<ion-avatar  item-end>
+							<img src="{{item?.image_path}}"   (load)="item.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!item.loaded">
+							<ion-spinner [ngClass]="{'center':true}" *ngIf="!item.loaded"></ion-spinner>							
+						</ion-avatar >
+						<h2  align="right">{{item?.user_title}}</h2>
+						<p *ngIf="item.consultation_title > '' " align="right" >مشاور {{item?.consultation_title}}</p>						
+					</ion-item>
+					<ion-row>
+						<ion-col>
+						  <button ion-button icon-left clear small (click)="removeItem(item)">
+							<ion-icon name="md-close"></ion-icon>
+						  </button>
+						</ion-col>
+					 </ion-row>		
+				</ion-item>
+				<ion-infinite-scroll (ionInfinite)="doInfiniteFavorites($event)">
+					<ion-infinite-scroll-content></ion-infinite-scroll-content>
+				</ion-infinite-scroll>			
+				
+		 </ion-list>
+		 
+		  <ion-list *ngSwitchCase="'search'"  item-right>
+				<ion-searchbar  dir="rtl"
+				  [(ngModel)]="myInput"
+				  [showCancelButton]="shouldShowCancel"
+				  [debounce]="1000"
+				  (ionInput)="onInput($event ,0)"
+				  (ionCancel)="onCancel($event)">
+				</ion-searchbar>
+				
+				<ion-item *ngFor="let  searchItem of searchItems"  (click)="goToItemView(searchItem)">
+						<ion-icon name="arrow-dropleft" item-left></ion-icon>
+						
+						<div item-right style="text-align:justify;direction:rtl">
+						<span class="headerStatus">{{searchItem?.contentType}}  </span>	/
+							{{searchItem?.record_parameter.lang_far_title}}
+						</div>
+				</ion-item>				
+				
+				<ion-infinite-scroll (ionInfinite)="doInfiniteSearch($event)">
+					<ion-infinite-scroll-content></ion-infinite-scroll-content>
+				</ion-infinite-scroll>						
+		  </ion-list>		 
+	</div>    
+</ion-content>

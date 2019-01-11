@@ -1,0 +1,49 @@
+<!--
+  Generated template for the MakeFreeQuestionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar > 
+		<ion-navbar>
+			<ion-item no-lines color="navbar" right text-wrap >
+				<ion-avatar  item-end  >
+					<img src="{{userProfile?.small_image}}"   (load)="headerloaded = true"   [ngClass]="{'img-loaded':loaded}" [hidden]="!headerloaded">
+					<ion-spinner [ngClass]="{'center':true}" *ngIf="!headerloaded"></ion-spinner>							
+				</ion-avatar >
+				<h2  align="right">{{userProfile?.pn_name}}</h2>
+			</ion-item>
+			<ion-buttons left>
+				<button item-left  ion-button clear color="top-button"  (click)='dismiss()'>
+					<ion-icon  style="zoom:1.5;margin-left: 10px;"   name="md-close" item-start ></ion-icon>
+				</button>	
+						
+				<button item-left  ion-button clear color="top-button"  (click)='submitQuestion()'>
+					<ion-icon  style="zoom:1.5;margin-left: 20px;"  name="md-checkmark" item-start ></ion-icon>
+				</button>	
+			</ion-buttons>
+		</ion-navbar>
+	</ion-navbar>	  
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list no-lines>
+		<ion-item  >
+			<ion-label stacked  text-right   color="primary" >سوال</ion-label>
+			<ion-textarea item-right  [(ngModel)]="question"   name="question" placeholder="سوال خود را در اين بخش ثبت نماييد..."></ion-textarea>
+		</ion-item> 
+		<ion-item>
+			<ion-label  stacked text-right   color="primary">پست الکترونیکی</ion-label>
+			<ion-input text-right type="email" placeholder="ورود پست الکترونیکی"  [(ngModel)]="email" name="email"  type="text"  spellcheck="false" 	required>
+			</ion-input>
+		</ion-item>		
+		<ion-item>
+			<ion-label  stacked text-right   color="primary">شماره همراه</ion-label>
+			<ion-input text-right type="number"  maxlength="11" placeholder="شماره موبايل 11 رقم و با صفر وارد شود" [(ngModel)]="mobile" name="mobile"   type="text"  spellcheck="false" 	required>
+			</ion-input>
+		</ion-item>
+	</ion-list>
+</ion-content>

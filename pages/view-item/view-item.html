@@ -1,0 +1,105 @@
+<!--
+  Generated template for the ViewItemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar>
+		<ion-item color="navbar"  text-wrap  no-lines >
+			<h2 class="header" align="right" style="text-align:justify;direction:rtl" > نوشته شده توسط {{ pageTitle }}</h2>
+		</ion-item>	
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-card>
+	  <ion-card-content text-right>
+				<ion-item no-lines  text-wrap item-right>
+					<div  *ngIf="contentType == 'content_faq' ">
+						<div>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_title}}</h2>
+						</div>
+						<br/>
+						<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="contentText"> </div>
+					</div>
+					<div  *ngIf="contentType == 'content_news' ">
+						<div>
+							<h1 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_header}}</h1>
+							<br/>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_title}}</h2>
+						</div>
+						<br/>
+						<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="contentText"> </div>
+						<br/>
+						<div   style="direction: rtl;"  align="right"> <span style="text-color:maron"> منبع : </span> {{content?.lang_far_source}}</div>
+					</div>					
+					<div  *ngIf="contentType == 'article' ">
+						<div>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_title}}</h2>
+						</div>
+						<br/>
+						<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="contentText"> </div>
+						<br/>
+						<div  style="direction: rtl;" align="right"> <span style="text-color:maron"  align="right"> منبع : </span><span> {{content?.lang_far_source}}  </span></div>
+						<div   style="direction: rtl;"  *ngIf="content.lang_far_writer > '' " align="right"> <span style="text-color:maron"> نوشته شده توسط : </span> {{content?.lang_far_writer}} </div>
+					</div>					
+					<div  *ngIf="contentType == 'content_files' ">
+						<div>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_title}}</h2>
+						</div>
+						<br/>
+						<div style="text-align:justify;direction:rtl" ><a href="http://raznameh.com/upload/site-id-15/upload_files/{{content?.file_path}}">دريافت فايل</a></div>
+					</div>					
+					<div  *ngIf="contentType == 'content_role' ">
+						<div>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{content?.lang_far_title}}</h2>
+						</div>
+						<br/>
+						<div style="text-align:justify;direction:rtl" class="item item-text-wrap" [innerHTML]="contentText"> </div>
+						<br/>
+						<div  style="direction: rtl;" align="right"> <span style="text-color:maron"  align="right"> منبع : </span><span> {{content?.lang_far_source}}  </span></div>
+						<div   style="direction: rtl;"  *ngIf="content?.lang_far_writer > '' " align="right"> <span style="text-color:maron"> نوشته شده توسط : </span> {{content?.lang_far_writer}} </div>
+					</div>					
+					<ion-item no-lines  (click)="goToConsultationProfile(record)">
+						<ion-avatar  item-end>
+							<img src="{{record?.small_image}}"  (load)="loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!loaded">
+							<ion-spinner [ngClass]="{'center':true}" *ngIf="!loaded"></ion-spinner>
+						</ion-avatar >
+						<h2  align="right">{{record?.lang_far_title}}</h2>
+						<p  *ngIf="is_consultation > 0 " align="right" >مشاور {{record?.consultation_title}}</p>					
+					</ion-item>
+				</ion-item>
+	  </ion-card-content>
+		<ion-row>
+			<ion-col>
+			  <button ion-button icon-left clear small  color="fotterButton" (click)="addToFavorite(record)">
+				<ion-icon name="md-bookmark"></ion-icon>
+				<div>افزودن به علاقه منديها</div>
+			  </button>
+			</ion-col>
+		  </ion-row>	  
+	</ion-card>		
+	<div *ngIf="commentLength > 0 ">
+		<ion-card>
+		  <ion-card-content text-right>
+				<ion-list item-right>
+					<ion-item class="item_class"  text-wrap inset *ngFor="let comment of comments"  item-end >
+						<div>
+							<h2 align="right" style="text-align:justify;direction:rtl" >{{comment?.lang_far_text}}</h2>
+						</div>					  
+						<ion-item no-lines>
+							<ion-avatar  item-end>
+								<img src="{{comment?.image_path}}"  (load)="comment.loaded = true" [ngClass]="{'img-loaded':loaded}" [hidden]="!comment.loaded">
+								<ion-spinner [ngClass]="{'center':true}" *ngIf="!comment.loaded"></ion-spinner>
+							</ion-avatar >
+							<h2  align="right">{{comment?.user_name}}</h2>
+							<p *ngIf="comment?.consultation_title > '' " align="right" >مشاور {{comment?.consultation_title}}</p>						
+						</ion-item>
+					</ion-item>
+				</ion-list>
+		  </ion-card-content>
+		</ion-card>		
+	</div>			
+</ion-content>
